@@ -1,23 +1,34 @@
-import logo from './logo.svg';
 import './App.css';
-
+import clear from './components/clear.svg'
 function App() {
   return (
+
+
+
+
+
+    
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+     <div className='Header'>
+     <form>
+  <label>
+    <input type="text" name="name" />
+  </label>
+  <input type="submit" value="Find Weather" />
+</form>
+     </div>
+     <div className='bodyWeather'>
+  
+            <img src={clear} alt="clear" />
+            <h1>clear sky</h1>
+            <h2>Temperature 24°C To 25°C</h2>
+            <div className='humidityAndPressur'>
+            <h3><strong>Humidity</strong> 72% </h3> <h3><strong>Pressure</strong> 1001.8</h3>
+            </div>
+
+     </div>
+
+
     </div>
   );
 }
