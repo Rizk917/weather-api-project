@@ -1,34 +1,108 @@
-import './App.css';
-import clear from './components/clear.svg'
+import React from "react";
+import { useState } from "react";
+import Footer from "./footer";
+import Headerimage from "./header";
+import axios from "axios";
+
 function App() {
+  const [weatherInfo, setWeatherInfo] = useState();
+  const [location, setLocation] = useState("lebanon");
+  const [headerid, setheaderid] = useState(null);
+  const [tempmin, settempmin] = useState();
+  const [maxTemp, setmaxTemp] = useState();
+  const [humidity, sethumidity] = useState();
+  const [Pressure, setPressure] = useState();
+  const [description, setdescription] = useState();
+  const [message, setMessage] = useState("");
+
+  const handleChange = (event) => {
+    setMessage(event.target.value);
+
+    console.log("value is:", event.target.value);
+  };
+  //GET WEATEHER DATA USING AXIOS
+  //-------------------------------------------------------------------------------------
+  const apikey = "90a87f6525b6106c84e2a03b668a1bce";
+  const baseUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${location}&cnt=8&units=metric&appid=${apikey}`;
+
+  const datagetter = async () => {
+    const { data } = await axios.get(baseUrl);
+    console.log(data);
+    setWeatherInfo(data);
+    console.log(weatherInfo?.list);
+
+    makeinfoList();
+  };
+//-----------------------------------------------------------------------------------------------
+
+
+  const makeinfoList = () => {
+    setheaderid(weatherInfo.list[0].weather[0].id);
+    settempmin(weatherInfo.list[0].main.temp_min);
+    setmaxTemp(weatherInfo.list[0].main.temp_max);
+    sethumidity(weatherInfo.list[0].main.humidity);
+    setPressure(weatherInfo.list[0].main.pressure);
+    setdescription(weatherInfo.list[0].weather[0].description);
+  };
+
   return (
-
-
-
-
-
-    
     <div className="App">
-     <div className='Header'>
-     <form>
-  <label>
-    <input type="text" name="name" />
-  </label>
-  <input type="submit" value="Find Weather" />
-</form>
-     </div>
-     <div className='bodyWeather'>
-  
-            <img src={clear} alt="clear" />
-            <h1>clear sky</h1>
-            <h2>Temperature 24°C To 25°C</h2>
-            <div className='humidityAndPressur'>
-            <h3><strong>Humidity</strong> 72% </h3> <h3><strong>Pressure</strong> 1001.8</h3>
-            </div>
+      <div className="searchBox">
+        <input
+          onChange={handleChange}
+          value={message}
+          type="text"
+          placeholder="Type in a city name"
+          className="text-city"
+        />
 
-     </div>
+        <button
+          onClick={async (e) => {
+            await datagetter();
+            setLocation(message);
+          }}
+          className="button"
+        >
+          {" "}
+          search
+        </button>
+      </div>
+
+      <div className="main">
+        <div className="cloud">
 
 
+
+          
+          <Headerimage id={headerid} />
+
+          <h3>{description}</h3>
+          <h2>
+            Temperature{" "}
+            <span>
+              {" "}
+              {tempmin} &deg; to {maxTemp} &deg; C
+            </span>
+          </h2>
+          <p>
+            Humidity <span> {humidity} % </span> Pressure
+            <span> {Pressure}</span>
+          </p>
+        </div>
+
+        <div className="comp">
+          {weatherInfo?.list.map((hourFrame, index) => (
+            <>
+              <Footer
+                io={hourFrame.weather[0].id}
+                time={hourFrame.dt_txt.split(" ")[1].split(":")[0]}
+                temp={ Math.floor(hourFrame.main.temp - 273.15)}
+               
+              />
+            </>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
