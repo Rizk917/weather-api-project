@@ -91,7 +91,7 @@ function App() {
           </p>
         </div>
 
-        <div className="comp">
+        <div className="footerpart">
           {weatherInfo?.list.map((hourFrame, index) => (
             <>
               <Footer
