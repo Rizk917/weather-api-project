@@ -1,12 +1,12 @@
 import React from "react";
 import { useState } from "react";
 import Footer from "./footer";
-import Headerimage from "./Body";
+import Body from "./body";
 import axios from "axios";
 
 function App() {
   const [weatherInfo, setWeatherInfo] = useState();
-  const [city, setcity] = useState('Paris');
+  const [city, setcity] = useState("Paris");
   const [headerid, setheaderid] = useState(null);
   const [tempmin, settempmin] = useState();
   const [maxTemp, setmaxTemp] = useState();
@@ -18,21 +18,21 @@ function App() {
   const handleChange = (event) => {
     setMessage(event.target.value);
   };
-  //GET WEATEHER DATA USING AXIOS
+  //GET WEATEHER DATA USING AXIOS (needs double click to get data and math.floor(value-273.34)is not needed)
+  //used .env to hide key and added it to git ignore
   //-------------------------------------------------------------------------------------
-  const apikey = "90a87f6525b6106c84e2a03b668a1bce";
-  const baseUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&cnt=8&units=metric&appid=${apikey}`;
+  const baseUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&cnt=8&units=metric&appid=${process.env.REACT_APP_WEATHER_API_KEY}`;
 
   const getWeatherData = async () => {
     const { data } = await axios.get(baseUrl);
     console.log(data);
     setWeatherInfo(data);
     console.log(weatherInfo?.list);
-    makeinfoList();
+    makeinfoList(); //call list
   };
-//-----------------------------------------------------------------------------------------------
+  //-----------------------------------------------------------------------------------------------
 
-//listing items we are gonna use
+  //listing items we are gonna use
   const makeinfoList = () => {
     setheaderid(weatherInfo.list[0].weather[0].id);
     settempmin(weatherInfo.list[0].main.temp_min);
@@ -68,11 +68,14 @@ function App() {
 
       <div className="main">
         <div className="cloud">
-
-
-
-          
-          <Headerimage id={headerid} />
+          <Body
+            id={headerid}
+            // desc={description}
+            // mintemp={tempmin}
+            // maxt={maxTemp}
+            // hu={humidity}
+            // pres={Pressure}
+          />
 
           <h3>{description}</h3>
           <h2>
@@ -92,10 +95,9 @@ function App() {
           {weatherInfo?.list.map((hourFrame, index) => (
             <>
               <Footer
-                io={hourFrame.weather[0].id}
+                id={hourFrame.weather[0].id}
                 time={hourFrame.dt_txt.split(" ")[1].split(":")[0]}
-                temp={ Math.floor(hourFrame.main.temp - 273.15)}
-               
+                temp={Math.floor(hourFrame.main.temp)}
               />
             </>
           ))}
