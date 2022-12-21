@@ -125,7 +125,7 @@
   background-color: lightblue;
 }
 
-.comp {
+.footerpart {
   height: 300px;
   display: flex;
   flex-direction: row;
