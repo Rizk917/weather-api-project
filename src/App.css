@@ -1,25 +1,4 @@
-/*.searchBox{
-  background-color: #66acc4;
-  height: 100px;
-  display: flex;
-}
-.text-city{
-  font-family: Raleway;
-  height: 50px;
-  width: 250px;
-  margin-top: 20px;
-  background: none;
-  margin-left: 40px;
-  border: none;
-  color: white;
-}
-::placeholder {
-  color: white;
-  opacity: 1; 
-  font-size: 20px;
-  font-family: Raleway;
-}
-*/
+
 
 .text-city {
   background-color: rgb(32, 32, 245);
@@ -125,12 +104,7 @@
   font-weight: bold;
   height: 250px;
 }
-.small .st0 {
-  fill: #f4a71d;
-}
-.small .st1 {
-  fill: #ffffff;
-}
+
 .small .time {
   display: flex;
   margin-top: 40px;

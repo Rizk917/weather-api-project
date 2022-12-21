@@ -1,12 +1,12 @@
 import React from "react";
 import { useState } from "react";
 import Footer from "./footer";
-import Headerimage from "./header";
+import Headerimage from "./search";
 import axios from "axios";
 
 function App() {
   const [weatherInfo, setWeatherInfo] = useState();
-  const [location, setLocation] = useState("lebanon");
+  const [location, setLocation] = useState('Paris');
   const [headerid, setheaderid] = useState(null);
   const [tempmin, settempmin] = useState();
   const [maxTemp, setmaxTemp] = useState();
@@ -25,17 +25,16 @@ function App() {
   const apikey = "90a87f6525b6106c84e2a03b668a1bce";
   const baseUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${location}&cnt=8&units=metric&appid=${apikey}`;
 
-  const datagetter = async () => {
+  const getWeatherData = async () => {
     const { data } = await axios.get(baseUrl);
     console.log(data);
     setWeatherInfo(data);
     console.log(weatherInfo?.list);
-
     makeinfoList();
   };
 //-----------------------------------------------------------------------------------------------
 
-
+//listing items we are gonna use
   const makeinfoList = () => {
     setheaderid(weatherInfo.list[0].weather[0].id);
     settempmin(weatherInfo.list[0].main.temp_min);
@@ -58,7 +57,7 @@ function App() {
 
         <button
           onClick={async (e) => {
-            await datagetter();
+            await getWeatherData();
             setLocation(message);
           }}
           className="button"

@@ -17,28 +17,28 @@ export default function Headerimage(props) {
           <img src={storm} alt="mostly-clouded" className="bigImage" />
         </div>
       );
-    } else if (props.io > 300 && props.id < 499) {
+    } else if (props.id > 300 && props.id < 499) {
       return (
         <div>
           {" "}
           <img src={drizzle} alt="mostly-clouded" className="bigImage" />
         </div>
       );
-    } else if (props.id > 499 && props.io < 599) {
+    } else if (props.id > 499 && props.id < 599) {
       return (
         <div>
           {" "}
           <img src={rain} alt="mostly-clouded" className="bigImage" />{" "}
         </div>
       );
-    } else if (props.id > 599 && props.io < 699) {
+    } else if (props.id > 599 && props.id < 699) {
       return (
         <div>
           {" "}
           <img src={snow} alt="mostly-clouded" className="bigImage" />{" "}
         </div>
       );
-    } else if (props.id > 699 && props.io < 799) {
+    } else if (props.id > 699 && props.id < 799) {
       return (
         <div>
           {" "}
